@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Register Account</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; padding-top: 50px; background-color: #f8f9fa; }
+        .register-container { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 400px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #333; }
+        input[type="text"], input[type="password"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .btn { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        .btn:hover { background-color: #0056b3; }
+        .link { display: block; text-align: center; margin-top: 15px; color: #007bff; text-decoration: none; }
+    </style>
+</h:head>
+<h:body>
+
+    <div class="register-container">
+        <h2 style="text-align:center;">Create Account</h2>
+        
+        <h:form>
+            <h:messages style="color:red; list-style:none; padding:0; text-align:center;" />
+
+            <h3 style="border-bottom: 1px solid #eee; padding-bottom: 5px;">Account Info</h3>
+            
+            <div class="form-group">
+                <h:outputLabel value="Register As:" />
+                <h:selectOneMenu value="#{alumniController.user.role}">
+                    <f:selectItem itemValue="Alumni" itemLabel="Alumni" />
+                    <f:selectItem itemValue="Lecturer" itemLabel="Lecturer" />
+                    <f:ajax render="academicInfoPanel" execute="@this" />
+                </h:selectOneMenu>
+            </div>
+            
+            <div class="form-group">
+                <h:outputLabel value="Full Name:" />
+                <h:inputText value="#{alumniController.user.fullName}" required="true" requiredMessage="Full Name is required"/>
+            </div>
+
+            <div class="form-group">
+                <h:outputLabel value="Email Address:" />
+                <h:inputText value="#{alumniController.email}" required="true" requiredMessage="Email is required"/>
+            </div>
+
+            <div class="form-group">
+                <h:outputLabel value="Password:" />
+                <h:inputSecret value="#{alumniController.password}" required="true" requiredMessage="Password is required"/>
+            </div>
+
+            <h:panelGroup id="academicInfoPanel">
+                
+                <h:panelGroup rendered="#{alumniController.user.role ne 'Lecturer'}">
+                    
+                    <h3 style="border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 20px;">Academic Info</h3>
+
+                    <div class="form-group">
+                        <h:outputLabel value="Matric No:" />
+                        <h:inputText value="#{alumniController.profile.matricNo}" 
+                                     required="true" 
+                                     requiredMessage="Matric No is required"/>
+                    </div>
+
+                    <div class="form-group">
+                        <h:outputLabel value="Degree Program:" />
+                        <h:inputText value="#{alumniController.profile.degree}" 
+                                     required="true" 
+                                     requiredMessage="Degree is required" />
+                    </div>
+
+                    <div class="form-group">
+                        <h:outputLabel value="Major:" />
+                        <h:inputText value="#{alumniController.profile.major}" 
+                                     required="true" 
+                                     requiredMessage="Major is required" />
+                    </div>
+
+                    <div class="form-group">
+                        <h:outputLabel value="Graduation Year:" />
+                        <h:inputText value="#{alumniController.profile.graduationYear}" 
+                                     required="true" 
+                                     requiredMessage="Year is required" 
+                                     converterMessage="Year must be a number"/>
+                    </div>
+                    
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <br/>
+            
+            <h:commandButton value="Register Account" action="#{alumniController.register}" styleClass="btn"/>
+
+            <h:link outcome="login" value="Already have an account? Login here" styleClass="link"/>
+        </h:form>
+    </div>
+
+</h:body>
+</html>

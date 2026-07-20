@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Admin Dashboard - ATCMS</title>
+        <style>
+            body { font-family: 'Segoe UI', sans-serif; padding: 20px; background-color: #f4f6f9; }
+            .container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.05); max-width: 1000px; margin: auto; }
+            
+            h2 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 40px; }
+            h2:first-of-type { margin-top: 0; }
+            p { color: #7f8c8d; }
+
+            table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; }
+            th, td { padding: 12px; border: 1px solid #e1e4e8; text-align: left; }
+            th { background-color: #343a40; color: white; }
+            
+            /* Status Badges */
+            .badge { padding: 5px 10px; border-radius: 4px; font-size: 0.85em; font-weight: bold; }
+            .badge-verified { background-color: #d4edda; color: #155724; }
+            .badge-pending { background-color: #fff3cd; color: #856404; }
+
+            /* Buttons */
+            .btn { padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer; color: white; margin-right: 5px; font-size: 0.9em; }
+            .btn-approve { background-color: #28a745; }
+            .btn-reject { background-color: #dc3545; }
+            .btn-delete { background-color: #6c757d; }
+            .btn-logout { background-color: #dc3545; padding: 10px 20px; font-size: 1rem; margin-top: 20px; }
+
+            .no-data { text-align: center; color: #777; padding: 20px; background: #fafafa; border: 1px dashed #ccc; }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="container">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h1>Admin Control Panel</h1>
+                <h:form>
+                    <h:commandButton value="Logout" action="#{alumniController.logout}" styleClass="btn btn-logout"/>
+                </h:form>
+            </div>
+            <h:messages globalOnly="true" style="color:green; list-style:none;"/>
+
+            <h2>⚠️ Pending Verifications</h2>
+            <p>New users waiting for approval.</p>
+
+            <h:form id="pendingForm">
+                <h:dataTable value="#{adminController.pendingUsers}" var="u" 
+                             rendered="#{not empty adminController.pendingUsers}">
+                    <h:column>
+                        <f:facet name="header">Name</f:facet> #{u.fullName}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Role</f:facet> #{u.role}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Email</f:facet> #{u.email}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Actions</f:facet>
+                        <h:commandButton value="Approve" action="#{adminController.approveUser(u.userID)}" styleClass="btn btn-approve"/>
+                        <h:commandButton value="Reject" action="#{adminController.rejectUser(u.userID)}" styleClass="btn btn-reject"/>
+                    </h:column>
+                </h:dataTable>
+
+                <h:panelGroup rendered="#{empty adminController.pendingUsers}">
+                    <div class="no-data">✅ No pending verifications. All clear!</div>
+                </h:panelGroup>
+            </h:form>
+
+            <h2>👥 User Directory</h2>
+            <p>Manage all registered accounts (Alumni &amp; Lecturers).</p>
+
+            <h:form id="allUsersForm">
+                <h:dataTable value="#{adminController.allUsers}" var="user">
+                    <h:column>
+                        <f:facet name="header">ID</f:facet> #{user.userID}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Full Name</f:facet> #{user.fullName}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Role</f:facet> #{user.role}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Status</f:facet>
+                        <span class="badge #{user.status eq 'Verified' ? 'badge-verified' : 'badge-pending'}">
+                            #{user.status}
+                        </span>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Manage</f:facet>
+                        
+                        <h:commandButton value="Delete User" 
+                                         action="#{adminController.deleteUser(user.userID)}" 
+                                         onclick="return confirm('⚠️ DANGER: This will permanently delete this user and all their data. Continue?');"
+                                         styleClass="btn btn-delete" />
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </div>
+    </h:body>
+</html>

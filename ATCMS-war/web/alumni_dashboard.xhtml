@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Alumni Dashboard</title>
+    <style>
+        /* Keep your existing styles */
+        .container { width: 60%; margin: 40px auto; font-family: sans-serif; }
+        .form-section { background: #f9f9f9; padding: 20px; margin-bottom: 20px; border-radius: 5px; }
+        .nav-section { display: flex; gap: 10px; margin-bottom: 20px; }
+        .status-badge { padding: 5px 10px; border-radius: 4px; font-size: 0.8em; float: right; }
+        .pending { background: #fff3cd; color: #856404; }
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        input[type=text] { width: 100%; padding: 8px; margin-top: 5px; }
+        .btn { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; text-decoration: none; }
+        .btn-job { background: #28a745; }
+    </style>
+</h:head>
+<h:body>
+    <div class="container">
+        <span class="status-badge pending">Status: #{alumniController.user.status}</span>
+        
+        <h2>Welcome, #{alumniController.user.fullName}</h2>
+
+        <div class="nav-section">
+            <h:link outcome="browse_jobs" value="Browse Jobs" styleClass="btn btn-job" />
+        </div>
+
+        <h:form enctype="multipart/form-data">
+            <h:messages globalOnly="true" style="color:blue; list-style:none; padding:10px; background:#eef;" />
+
+            <div class="form-section" style="border-left: 5px solid #007bff;">
+                <h3>Resume / CV</h3>
+                <p>Upload your PDF resume to apply for jobs.</p>
+                
+                <h:panelGroup rendered="#{not empty alumniController.profile.resumeFileName}">
+                    <p style="color: green; font-weight: bold;">
+                        ✔ Current Resume: #{alumniController.profile.resumeFileName}
+                    </p>
+                </h:panelGroup>
+
+                <h:inputFile value="#{alumniController.uploadedResume}" />
+                <h:commandButton value="Upload Resume" action="#{alumniController.uploadResume}" styleClass="btn" style="margin-top:10px;"/>
+            </div>
+
+            <div class="form-section">
+                <h3>Academic Information</h3>
+                <label>Matric No (ID):</label>
+                <h:inputText value="#{alumniController.profile.matricNo}" />
+
+                <label>Graduation Year:</label>
+                <h:inputText value="#{alumniController.profile.graduationYear}" />
+
+                <label>Degree:</label>
+                <h:inputText value="#{alumniController.profile.degree}" />
+                
+                <label>Major:</label>
+                <h:inputText value="#{alumniController.profile.major}" />
+            </div>
+
+            <div class="form-section">
+                <h3>Career &amp; Skills</h3>
+                <label>Current Employer:</label>
+                <h:inputText value="#{alumniController.profile.currentEmployer}" />
+
+                <label>Job Title:</label>
+                <h:inputText value="#{alumniController.profile.jobTitle}" />
+                
+                <label>Skills:</label>
+                <h:inputText value="#{alumniController.profile.skills}" />
+            </div>
+
+            <h:commandButton value="Update Profile Info" action="#{alumniController.updateProfile}" styleClass="btn"/>
+            <h:commandButton value="Logout" action="#{alumniController.logout}" styleClass="btn" style="background:#dc3545; margin-left:10px;"/>
+        </h:form>
+    </div>
+</h:body>
+</html>

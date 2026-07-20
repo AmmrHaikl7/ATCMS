@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Browse Job Postings</title>
+        <style>
+            body { font-family: sans-serif; padding: 20px; background-color: #f4f4f4; }
+            .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; table-layout: fixed; /* Fixes column widths */ }
+            th, td { padding: 12px; border: 1px solid #ddd; text-align: left; vertical-align: top; }
+            th { background-color: #007bff; color: white; }
+            
+            .btn { padding: 5px 10px; background: #28a745; color: white; border: none; cursor: pointer; }
+            
+            /* Style to handle long descriptions */
+            .desc-text {
+                font-size: 0.9em;
+                color: #333;
+                white-space: pre-wrap; /* Preserves line breaks from the input */
+                max-height: 150px;     /* Optional: Limits height if text is huge */
+                overflow-y: auto;      /* Optional: Adds scrollbar if text is huge */
+            }
+
+            .badge-applied {
+                background-color: #e2e6ea;
+                color: #28a745;
+                padding: 6px 12px;
+                border-radius: 4px;
+                font-weight: bold;
+                border: 1px solid #cbd3da;
+                display: inline-block;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="container">
+            <h2>Available Career Opportunities</h2>
+            
+            <h:messages globalOnly="true" style="color:green; list-style:none; padding:10px; background:#eef; border:1px solid #ccf; margin-bottom:10px;"/>
+
+            <h:form>
+                <h:dataTable value="#{alumniController.allJobs}" var="job">
+                    
+                    <h:column>
+                        <f:facet name="header">Position</f:facet>
+                        <strong>#{job.jobTitle}</strong>
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">Company</f:facet>
+                        #{job.companyName} 
+                        <br/>
+                        <small style="color:gray">#{job.location}</small>
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">Job Description</f:facet>
+                        <div class="desc-text">
+                            #{job.jobDescription}
+                        </div>
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">Action</f:facet>
+
+                        <h:commandButton value="Apply Now" 
+                                         action="#{alumniController.applyForJob}" 
+                                         styleClass="btn" style="background-color: #e67e22;"
+                                         onclick="return confirm('Apply using your uploaded resume?');"
+                                         rendered="#{!alumniController.hasApplied(job.jobId)}">
+                            <f:setPropertyActionListener target="#{alumniController.selectedJob}" value="#{job}" />
+                        </h:commandButton>
+
+                        <h:panelGroup rendered="#{alumniController.hasApplied(job.jobId)}">
+                            <span class="badge-applied">✔ Applied</span>
+                        </h:panelGroup>
+
+                    </h:column>
+                </h:dataTable>
+                <br/>
+                <h:link outcome="alumni_dashboard" value="Back to Dashboard" style="color: #007bff;"/>
+            </h:form>
+        </div>
+    </h:body>
+</html>

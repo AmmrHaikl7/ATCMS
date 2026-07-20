@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Update Profile</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background-color: #f4f4f4; }
+        .form-container { background: white; padding: 30px; border-radius: 8px; max-width: 500px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"] { width: 100%; padding: 8px; box-sizing: border-box; }
+        .btn-save { background-color: #28a745; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 4px; }
+        .btn-cancel { background-color: #6c757d; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; margin-left: 10px; }
+    </style>
+</h:head>
+<h:body>
+
+    <div class="form-container">
+        <h2>Update Your Details</h2>
+        
+        <h:form>
+            <h:messages globalOnly="true" style="color:red; list-style:none; padding:0;" />
+            
+            <div class="input-group">
+                <h:outputLabel value="Matric No:" />
+                <h:inputText value="#{alumniController.profile.matricNo}" />
+            </div>
+
+            <div class="input-group">
+                <h:outputLabel value="Degree Program:" />
+                <h:inputText value="#{alumniController.profile.degree}" required="true" 
+                             requiredMessage="Degree is required" />
+            </div>
+
+            <div class="input-group">
+                <h:outputLabel value="Major:" />
+                <h:inputText value="#{alumniController.profile.major}" required="true" 
+                             requiredMessage="Major is required" />
+            </div>
+
+            <div class="input-group">
+                <h:outputLabel value="Graduation Year:" />
+                <h:inputText value="#{alumniController.profile.graduationYear}" required="true" 
+                             converterMessage="Please enter a valid year (Numbers only)">
+                </h:inputText>
+            </div>
+
+            <div class="input-group">
+                <h:outputLabel value="Current Employer:" />
+                <h:inputText value="#{alumniController.profile.currentEmployer}" />
+                <small style="color: gray;">(e.g., Google, Petronas, Self-Employed)</small>
+            </div>
+
+            <div class="input-group">
+                <h:outputLabel value="Job Title / Position:" />
+                <h:inputText value="#{alumniController.profile.jobTitle}" />
+            </div>
+
+            <div class="input-group">
+                <h:outputLabel value="Skills (Comma Separated):" />
+                <h:inputText value="#{alumniController.profile.skills}" />
+            </div>
+
+            <br/>
+            
+            <h:commandButton value="Save Changes" action="#{alumniController.updateProfile}" styleClass="btn-save" />
+            
+            <h:commandButton value="Cancel" action="alumni_dashboard?faces-redirect=true" immediate="true" styleClass="btn-cancel" />
+            
+        </h:form>
+    </div>
+
+</h:body>
+</html>

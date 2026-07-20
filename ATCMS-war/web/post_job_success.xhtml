@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Success | AlumniTrack</title>
+        <style>
+            /* SAME CSS AS BEFORE */
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f0f2f5;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                margin: 0;
+            }
+            .card {
+                background-color: #ffffff;
+                width: 100%;
+                max-width: 500px;
+                padding: 40px;
+                border-radius: 12px;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+                text-align: center;
+            }
+            h2 { color: #1a1a1a; margin-bottom: 10px; }
+            p { color: #666; margin-bottom: 30px; line-height: 1.5; }
+            
+            .icon-circle {
+                width: 80px; height: 80px;
+                background-color: #d1fae5;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 20px auto;
+            }
+            .check-mark { font-size: 40px; color: #10b981; }
+
+            .btn-group { display: flex; flex-direction: column; gap: 10px; }
+            
+            /* Standard HTML Links styled as buttons */
+            .btn {
+                display: block;
+                width: 100%;
+                padding: 14px;
+                border-radius: 8px;
+                text-decoration: none;
+                font-weight: 600;
+                transition: background 0.2s;
+                box-sizing: border-box; /* Ensures padding doesn't mess up width */
+            }
+            .btn-primary { background-color: #3b82f6; color: white; }
+            .btn-primary:hover { background-color: #2563eb; }
+            
+            .btn-secondary { background-color: #e5e7eb; color: #374151; }
+            .btn-secondary:hover { background-color: #d1d5db; }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="card">
+            <div class="icon-circle">
+                <span class="check-mark">✔</span>
+            </div>
+            
+            <h2>Job Posted Successfully!</h2>
+            
+            <p>
+                The position <strong>"#{requestScope.postedTitle}"</strong> at 
+                <strong>"#{requestScope.postedCompany}"</strong> has been published and is now visible to alumni.
+            </p>
+
+            <div class="btn-group">
+                <a href="newJob.xhtml" class="btn btn-primary">Post Another Job</a>
+                <a href="lecturer_dashboard.xhtml" class="btn btn-secondary">Return to Dashboard</a>
+            </div>
+        </div>
+    </h:body>
+</html>

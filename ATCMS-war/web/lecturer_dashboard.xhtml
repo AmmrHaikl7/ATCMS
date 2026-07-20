@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Lecturer Dashboard | AlumniTrack</title>
+        <style>
+            /* 1. RESET AND LAYOUT */
+            body { 
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+                background-color: #f4f6f9; 
+                margin: 0; 
+                padding: 0; 
+            }
+            .container {
+                max-width: 1100px;
+                margin: 50px auto;
+                padding: 20px;
+                position: relative; /* Needed for positioning the logout button */
+            }
+
+            /* 2. HEADER SECTION */
+            .header {
+                text-align: center;
+                margin-bottom: 50px;
+            }
+            .header h1 {
+                color: #2c3e50;
+                margin-bottom: 10px;
+                font-size: 2.5rem;
+            }
+            .header p {
+                color: #7f8c8d;
+                font-size: 1.2rem;
+            }
+
+            /* 3. CARD GRID */
+            .grid {
+                display: flex;
+                gap: 30px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            /* 4. FEATURE CARDS */
+            .card {
+                background: white;
+                width: 300px;
+                padding: 40px 30px;
+                border-radius: 12px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+                text-align: center;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            }
+
+            /* 5. ICONS */
+            .icon {
+                font-size: 4rem;
+                margin-bottom: 20px;
+                display: block;
+            }
+
+            .card h3 {
+                color: #34495e;
+                margin-bottom: 15px;
+                font-size: 1.5rem;
+            }
+            .card p {
+                color: #95a5a6;
+                line-height: 1.6;
+                margin-bottom: 30px;
+                min-height: 50px;
+            }
+
+            /* 6. BUTTONS */
+            .btn {
+                display: inline-block;
+                padding: 12px 25px;
+                color: white;
+                text-decoration: none;
+                border-radius: 25px;
+                font-weight: bold;
+                transition: background 0.3s;
+                width: 80%;
+            }
+            
+            .btn-blue { background-color: #3498db; }
+            .btn-blue:hover { background-color: #2980b9; }
+
+            .btn-green { background-color: #2ecc71; }
+            .btn-green:hover { background-color: #27ae60; }
+
+            .btn-purple { background-color: #9b59b6; }
+            .btn-purple:hover { background-color: #8e44ad; }
+
+            /* 7. NEW LOGOUT BUTTON STYLE */
+            .logout-btn {
+                position: absolute;
+                top: 0;
+                right: 0;
+                background-color: #e74c3c;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 0.9rem;
+            }
+            .logout-btn:hover {
+                background-color: #c0392b;
+            }
+        </style>
+    </h:head>
+    <h:body>
+
+        <div class="container">
+            
+            <h:form>
+                <h:commandButton value="Logout" action="#{alumniController.logout}" styleClass="logout-btn" />
+            </h:form>
+
+            <div class="header">
+                <h1>Lecturer Dashboard</h1>
+                <p>Welcome back, #{alumniController.user.fullName}. What would you like to do today?</p>
+            </div>
+
+            <div class="grid">
+                
+                <div class="card">
+                    <span class="icon">📢</span>
+                    <h3>Post New Job</h3>
+                    <p>Create a new internship or job opportunity for alumni and students.</p>
+                    <a href="newJob.xhtml" class="btn btn-blue">Create Post</a>
+                </div>
+
+                <div class="card">
+                    <span class="icon">📊</span>
+                    <h3>Career Analytics</h3>
+                    <p>View statistics on job postings, alumni placement, and active partners.</p>
+                    <a href="AnalyticsServlet" class="btn btn-green">View Data</a>
+                </div>
+
+                <div class="card">
+                    <span class="icon">📄</span>
+                    <h3>Generate Report</h3>
+                    <p>Download or print a formal report of all current job activities.</p>
+                    <a href="ReportServlet" class="btn btn-purple">Get Report</a>
+                </div>
+
+            </div>
+        </div>
+
+    </h:body>
+</html>

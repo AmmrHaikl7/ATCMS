@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Career Analytics | AlumniTrack</title>
+        <style>
+            body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; }
+            .dashboard-container { max-width: 1000px; margin: 0 auto; }
+            .stats-grid { display: flex; gap: 20px; margin-bottom: 30px; }
+            .card { background: white; flex: 1; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; }
+            .card h3 { color: #666; margin: 0; font-size: 0.9rem; text-transform: uppercase; }
+            .card .number { color: #3b82f6; font-size: 3rem; font-weight: bold; margin: 10px 0; }
+            .table-card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+            .styled-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+            .styled-table th { text-align: left; padding: 12px; background-color: #f8f9fa; color: #444; border-bottom: 2px solid #eee; }
+            .styled-table td { padding: 12px; border-bottom: 1px solid #eee; color: #333; }
+            h1 { color: #1a1a1a; margin-bottom: 20px; }
+            .btn-back { display: inline-block; margin-bottom: 20px; text-decoration: none; color: #555; font-weight: bold; }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="dashboard-container">
+            <h:link outcome="lecturer_dashboard" value="← Back to Dashboard" styleClass="btn-back"/>
+            
+            <h1>Alumni Career Analytics</h1>
+
+            <div class="stats-grid">
+                <div class="card">
+                    <h3>Total Jobs Posted</h3>
+                    <div class="number">#{requestScope.totalJobsCount}</div>
+                </div>
+                <div class="card">
+                    <h3>Active Companies</h3>
+                    <div class="number">#{requestScope.totalCompaniesCount}</div>
+                </div>
+                <div class="card">
+                    <h3>System Status</h3>
+                    <div class="number" style="color: #10b981; font-size: 2rem; line-height: 3rem;">Active</div>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <h2>Recent Job Postings</h2>
+                
+                <h:dataTable value="#{requestScope.jobList}" var="job" styleClass="styled-table">
+                    
+                    <h:column>
+                        <f:facet name="header">Job Title</f:facet>
+                        #{job.jobTitle}
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">Company</f:facet>
+                        #{job.companyName}
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">Location</f:facet>
+                        #{job.location}
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">Deadline</f:facet>
+                        <h:outputText value="#{job.applicationDeadline}">
+                            <f:convertDateTime pattern="dd MMM yyyy" />
+                        </h:outputText>
+                    </h:column>
+                    
+                </h:dataTable>
+            </div>
+        </div>
+    </h:body>
+</html>

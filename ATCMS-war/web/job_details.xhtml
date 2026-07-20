@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Job Details - #{alumniController.selectedJob.title}</title>
+    <style>
+        .container { width: 50%; margin: 50px auto; font-family: sans-serif; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .job-header { border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 20px; }
+        .detail-label { font-weight: bold; color: #555; display: block; margin-top: 15px; }
+        .detail-text { margin-bottom: 10px; line-height: 1.6; }
+        .btn-apply { background-color: #28a745; color: white; padding: 12px 25px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 20px; }
+        .btn-back { color: #007bff; text-decoration: none; margin-left: 15px; }
+    </style>
+</h:head>
+<h:body>
+    <div class="container">
+        <div class="job-header">
+            <h2>#{alumniController.selectedJob.title}</h2>
+            <h3 style="color: #666;">#{alumniController.selectedJob.company}</h3>
+        </div>
+
+        <span class="detail-label">Location:</span>
+        <div class="detail-text">#{alumniController.selectedJob.location}</div>
+
+        <span class="detail-label">Description:</span>
+        <div class="detail-text">#{alumniController.selectedJob.description}</div>
+
+        <span class="detail-label">Requirements:</span>
+        <div class="detail-text">#{alumniController.selectedJob.requirements}</div>
+
+        <h:form>
+            <h:commandButton value="Apply for this Job" 
+                             action="#{alumniController.applyForJob}" 
+                             styleClass="btn-apply"/>
+            
+            <h:link outcome="browse_jobs" value="Back to Browse" styleClass="btn-back" />
+        </h:form>
+    </div>
+</h:body>
+</html>
